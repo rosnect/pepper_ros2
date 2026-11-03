@@ -102,6 +102,19 @@ public class SpeechControllerTest {
         backend.completion.finished(false,null); clock.now+=180001;
         controller.command(say(id())); assertEquals(2,backend.starts);
     }
+    @Test public void sdkErrorDetailsReachTheTabletAndRosResult() {
+        controller.command(say(id()));
+        backend.completion.finished(false,"QiSDK speech run: speech service unavailable");
+        assertEquals("failed",last());
+        assertEquals("QiSDK speech run: speech service unavailable",events.get(events.size()-1).optString("message"));
+    }
+    @Test public void sdkErrorMessagesAreBounded() {
+        controller.command(say(id()));
+        StringBuilder detail=new StringBuilder();
+        for (int i=0;i<1000;i++) detail.append('x');
+        backend.completion.finished(false,detail.toString());
+        assertEquals(300,events.get(events.size()-1).optString("message").length());
+    }
     @Test public void wireMatchesExistingBridgeJsonContract() throws Exception {
         JSONObject envelope=Wire.envelope(Wire.STATE,controller.state());
         assertEquals("json",envelope.getString("value_type"));

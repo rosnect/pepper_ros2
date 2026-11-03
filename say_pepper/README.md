@@ -156,3 +156,13 @@ For TLS or authenticated brokers, select TLS/enter credentials on the tablet and
 Local verification and limitations are recorded in [docs/validation.md](docs/validation.md). The APK and core state machines are tested locally. ROS 2 action runtime, physical Pepper speech, focus handling on the actual tablet, and the complete MQTT-to-QiSDK path remain lab acceptance checks.
 
 See [docs/protocol.md](docs/protocol.md) for extension points and message contracts.
+
+## Diagnosing speech errors (0.1.1)
+
+If ROS reports `accepted` followed by a QiSDK failure, delivery succeeded but speech did not complete. Version 0.1.1 includes the failing SDK stage and detail in the event/result. Keep the app open, reconnect and enable remote speech after reinstalling. For live diagnostics on the tablet laptop:
+
+```bash
+adb -s 192.168.50.6:5555 logcat -v time "SayPepper:V" "*:S"
+```
+
+Retry one short speech command from ROS, then copy the error and any nearby focus messages. The diagnostic update exposes the cause; it does not claim to fix an as-yet-unknown robot-side failure. The generated `artifacts/qisdk-diagnostics.patch` can be copied to a clean clone and applied from the `pepper_ros2` repository root using `git apply /path/to/qisdk-diagnostics.patch` before rebuilding.

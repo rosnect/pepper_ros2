@@ -33,3 +33,9 @@ ROS 2 is not installed on this Mac, and Pepper is not present. No claim is made 
 7. If TLS is needed, verify Android 6 trusts the broker chain and the configured hostname matches the certificate.
 
 The APK has not been installed on the user's phone or sent robot commands during local development. Full speech-through-MQTT acceptance remains a lab test.
+
+## Diagnostic update — 2026-11-03
+
+The first physical test reached tablet command acceptance, then failed in QiSDK speech. The original app hid the actual SDK error, so the cause is not yet identified. Version 0.1.1 preserves the SDK build/run stage and error detail in the tablet/ROS result (bounded to 300 characters), logs full diagnostic messages under `SayPepper`, and logs robot-focus transitions. No robot password or new permissions have been added.
+
+Android build, lint, 16 Java tests and 13 Python protocol tests passed locally for this update. Physical retry and the underlying speech failure diagnosis remain pending lab logs. `ros2embedded` was not modified.

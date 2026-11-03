@@ -104,7 +104,7 @@ final class SpeechController {
         String state=record.stopState != null ? record.stopState
                 : canceled ? "canceled" : error != null ? "failed" : "succeeded";
         active=null; phase="idle";
-        emit(record,state,error != null ? "QiSDK speech failed" : "Speech "+state);
+        emit(record,state,error != null ? error.substring(0,Math.min(error.length(),300)) : "Speech "+state);
     }
     private void stop(String state, String message) {
         if (active == null || active.stopState != null) return;

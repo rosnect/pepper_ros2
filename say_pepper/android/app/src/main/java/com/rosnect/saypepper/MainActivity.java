@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.SystemClock;
+import android.util.Log;
 import android.text.InputType;
 import android.view.View;
 import android.view.WindowManager;
@@ -119,12 +120,15 @@ public final class MainActivity extends RobotActivity implements RobotLifecycleC
         connect.setText("Connect"); setFields(true); render();
     }
     @Override public void onRobotFocusGained(QiContext context) {
+        Log.i("SayPepper","Robot focus gained");
         handler.post(() -> { if (destroyed) return; backend.context(context); speech.focus(true); render(); });
     }
     @Override public void onRobotFocusLost() {
+        Log.w("SayPepper","Robot focus lost");
         handler.post(() -> { if (destroyed) return; speech.focus(false); backend.context(null); render(); });
     }
     @Override public void onRobotFocusRefused(String reason) {
+        Log.w("SayPepper","Robot focus refused: "+reason);
         handler.post(() -> { if (destroyed) return; speech.focus(false); message.setText("Robot focus refused. Check Pepper and close other robot apps."); render(); });
     }
     @Override protected void onPause() {
