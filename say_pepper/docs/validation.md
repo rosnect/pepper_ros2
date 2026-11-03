@@ -39,3 +39,11 @@ The APK has not been installed on the user's phone or sent robot commands during
 The first physical test reached tablet command acceptance, then failed in QiSDK speech. The original app hid the actual SDK error, so the cause is not yet identified. Version 0.1.1 preserves the SDK build/run stage and error detail in the tablet/ROS result (bounded to 300 characters), logs full diagnostic messages under `SayPepper`, and logs robot-focus transitions. No robot password or new permissions have been added.
 
 Android build, lint, 16 Java tests and 13 Python protocol tests passed locally for this update. Physical retry and the underlying speech failure diagnosis remain pending lab logs. `ros2embedded` was not modified.
+
+## Threading fix — 2026-11-03 (0.1.2)
+
+The supplied `pepper_log_detail.txt` contains four `QiSDK speech run: android.os.NetworkOnMainThreadException` failures. The run setup registered a QiSDK started listener synchronously on the UI thread. All QiSDK operations now run on a dedicated serialized worker, and only controller/UI notifications return to the main looper. Worker shutdown cancels pending speech and suppresses late UI callbacks. No additional permissions or changes to `ros2embedded` are required for this fix.
+
+APK build and lint passed. All 19 Java tests and 13 Python tests passed, including three regression tests for background SDK dispatch, serialized focus/start/cancel ordering, UI notification dispatch and worker cleanup. Physical speech must be retried on Pepper using version 0.1.2.
+
+Reference: [QiSDK synchronous/asynchronous calls](https://qisdk.softbankrobotics.com/sdk/doc/pepper-sdk/ch2_principles/sync_async.html).

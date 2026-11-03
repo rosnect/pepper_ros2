@@ -138,6 +138,7 @@ public final class MainActivity extends RobotActivity implements RobotLifecycleC
     @Override protected void onDestroy() {
         destroyed=true; handler.removeCallbacks(heartbeat);
         speech.localStop(); if (mqtt != null) mqtt.stop();
+        backend.close();
         QiSDK.unregister(this,this); super.onDestroy();
     }
 }

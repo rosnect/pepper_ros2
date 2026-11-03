@@ -49,7 +49,7 @@ The adapter independently enforces the action deadline. If it cannot obtain a ta
 
 ## Lifecycle and concurrency
 
-The tablet serializes SDK operations and callbacks through the main looper without blocking it on speech. The pure controller serializes state transitions. Foreground, focus, bridge lease and the local enable switch gate admission. Focus loss, app pause and transport loss stop speech; reconnection does not re-enable it. There is no Android background robot-control service.
+The tablet serializes SDK operations on a dedicated worker thread, including synchronous listener registration. Only controller/UI notifications return to Android's main looper. The pure controller serializes state transitions. Foreground, focus, bridge lease and the local enable switch gate admission. Focus loss, app pause and transport loss stop speech; reconnection does not re-enable it. There is no Android background robot-control service.
 
 The ROS adapter uses a reentrant callback group and a four-thread executor so the executing action's wait cannot block device events, state updates or cancellation. It reserves admission before executing a goal to reject simultaneous clients. The ROS action remains responsive while the device performs the action.
 

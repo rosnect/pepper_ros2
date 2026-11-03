@@ -166,3 +166,9 @@ adb -s 192.168.50.6:5555 logcat -v time "SayPepper:V" "*:S"
 ```
 
 Retry one short speech command from ROS, then copy the error and any nearby focus messages. The diagnostic update exposes the cause; it does not claim to fix an as-yet-unknown robot-side failure. The generated `artifacts/qisdk-diagnostics.patch` can be copied to a clean clone and applied from the `pepper_ros2` repository root using `git apply /path/to/qisdk-diagnostics.patch` before rebuilding.
+
+### NetworkOnMainThreadException fix (0.1.2)
+
+A physical speech test identified synchronous QiSDK listener registration on Android's UI thread. Version 0.1.2 moves SDK operations to a dedicated worker and preserves UI updates on the main thread. No new robot permissions are needed for this error. Copy the latest `artifacts/say_pepper-debug.apk` to the tablet-connected laptop and install it with `adb -s 192.168.50.6:5555 install -r say_pepper-debug.apk`. Reopen, reconnect, enable remote speech and retry. ROS packages do not need rebuilding.
+
+To build from source on a lab checkout currently at diagnostic version 0.1.1, copy `artifacts/qisdk-threading-fix.patch` there, apply it from the `pepper_ros2` repository root using `git apply /path/to/qisdk-threading-fix.patch`, then rebuild the Android app. These local changes must be transferred before a lab rebuild can contain the fix.
