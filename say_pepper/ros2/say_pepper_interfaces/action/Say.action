@@ -1,0 +1,12 @@
+# Plain text. Default language/voice configured on Pepper. One active goal per robot.
+string text
+# 0 selects 30 seconds; otherwise 1..120 seconds (including action construction).
+float32 timeout_sec
+---
+bool success
+# succeeded, canceled, failed, rejected, timed_out, disconnected, outcome_unknown
+string state
+string message
+---
+string state
+string message

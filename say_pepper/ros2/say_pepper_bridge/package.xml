@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<package format="3">
+  <name>say_pepper_bridge</name><version>0.1.0</version>
+  <description>Pepper speech action adapter using ros2embedded topic discovery.</description>
+  <maintainer email="maintainers@example.com">say_pepper contributors</maintainer>
+  <license>Apache-2.0</license>
+  <buildtool_depend>ament_python</buildtool_depend>
+  <exec_depend>rclpy</exec_depend><test_depend>action_msgs</test_depend><exec_depend>std_msgs</exec_depend>
+  <exec_depend>say_pepper_interfaces</exec_depend><exec_depend>bridge_manager</exec_depend>
+  <exec_depend>launch_ros</exec_depend><exec_depend>launch</exec_depend>
+  <export><build_type>ament_python</build_type></export>
+</package>
