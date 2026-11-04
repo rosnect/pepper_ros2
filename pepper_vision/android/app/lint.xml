@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lint>
+    <!-- QiSDK 1.7.5 uses support-v7. Preserve the working Pepper application's target 28.
+         This APK is sideloaded on Pepper, not submitted to Google Play. -->
+    <issue id="GradleCompatible"><ignore path="build.gradle" /></issue>
+    <issue id="ExpiredTargetSdkVersion"><ignore path="build.gradle" /></issue>
+</lint>

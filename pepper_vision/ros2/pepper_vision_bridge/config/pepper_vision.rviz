@@ -1,0 +1,27 @@
+Panels:
+  - Class: rviz_common/Displays
+    Name: Displays
+Visualization Manager:
+  Class: ""
+  Global Options:
+    Background Color: 20; 22; 26
+    Fixed Frame: pepper_head_camera_optical_frame
+    Frame Rate: 15
+  Displays:
+    - Class: rviz_default_plugins/Image
+      Name: Pepper head camera
+      Enabled: true
+      Topic:
+        Value: /pepper/camera/color/image_raw
+        Depth: 1
+        Durability Policy: Volatile
+        Reliability Policy: Best Effort
+        History Policy: Keep Last
+      Transport Hint: raw
+      Normalize Range: true
+      Queue Size: 1
+  Tools:
+    - Class: rviz_default_plugins/Interact
+Window Geometry:
+  Width: 1100
+  Height: 760
